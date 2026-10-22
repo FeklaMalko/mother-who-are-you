@@ -1,8 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 440" role="img"><title>Мама закрывает семейный чат на паузу</title><rect width="520" height="440" rx="26" fill="#D9FF43"/><path d="M28 43h154q16 0 16 16v68q0 16-16 16h-74l-37 26 7-26H28q-16 0-16-16V59q0-16 16-16Z" fill="#2453FF" stroke="#171717" stroke-width="7"/><circle cx="68" cy="92" r="7" fill="#F5F1E8"/><circle cx="104" cy="92" r="7" fill="#F5F1E8"/><circle cx="140" cy="92" r="7" fill="#F5F1E8"/><path d="M336 42h153q16 0 16 16v71q0 16-16 16h-38l8 27-38-27h-85q-16 0-16-16V58q0-16 16-16Z" fill="#FF6FAE" stroke="#171717" stroke-width="7"/><path d="M351 79h108m-108 21h77" stroke="#171717" stroke-width="7" stroke-linecap="round"/><rect x="399" y="205" width="77" height="117" rx="15" fill="#F5F1E8" stroke="#171717" stroke-width="7"/><path d="M419 226h38m-38 17h38" stroke="#2453FF" stroke-width="6" stroke-linecap="round"/><circle cx="437" cy="300" r="6" fill="#FF7049"/><path d="M0 402q115-28 215 0t305 0v38H0z" fill="#2453FF"/><g stroke="#171717" stroke-linecap="round" stroke-linejoin="round">
- <path d="M214 223C187 215 173 230 166 251l-19 39c-7 14-2 27 10 31 12 4 20-4 26-17l23-39 19-8" fill="#E6B18C" stroke-width="9"/>
- <path d="M306 223c27-8 41 7 48 28l19 39c7 14 2 27-10 31-12 4-20-4-26-17l-23-39-19-8" fill="#E6B18C" stroke-width="9"/>
- <path d="M238 181h44v50h-44z" fill="#E6B18C" stroke-width="7"/>
- <path d="M211 216q49-26 98 0l24 213H187z" fill="#2453FF" stroke-width="10"/>
+ <path d="M238 181h44v49h-44z" fill="#EAB28D" stroke-width="7"/>
+ <path d="M214 216Q191 214 178 235L143 291Q137 303 149 308Q161 312 169 298L198 259L188 421Q260 432 332 421L322 259L351 298Q359 312 371 308Q383 303 377 291L342 235Q329 214 306 216Q260 195 214 216Z" fill="#2453FF" stroke-width="10"/>
  <path d="m234 220 26 29 26-29" fill="none" stroke="#D9FF43" stroke-width="9"/>
  <circle cx="260" cy="143" r="53" fill="#E6B18C" stroke-width="8"/>
  <path d="M208 144c-4-53 22-85 59-85 41 0 65 34 55 91l-21-21-17-24c-17 21-43 34-76 35z" fill="#171717" stroke="#171717" stroke-width="7"/>
