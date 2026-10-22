@@ -1,4 +1,4 @@
-import { archetypes, questions, childAgeStages, childStageForMonths, getQuestions, getArchetypeAgeReading, getArchetypeSituations, getFamilyDynamicsReading, zodiacSign, scoreAnswers, getAstroCombination } from './engine.js';
+import { archetypes, questions, childAgeStages, childStageForMonths, getQuestions, getArchetypeAgeReading, getArchetypeSituations, getFamilyDynamicsReading, zodiacSign, scoreAnswers, getAstroCombination } from './engine.js?v=dark-comedy-1';
 const $=selector=>document.querySelector(selector);
 const screens=['home','profile','quiz','result'].map(name=>$(`#screen-${name}`));
 let state={date:'',sign:null,childAges:[],childAgesMonths:[],questions,answers:Array(questions.length).fill(null),index:0,locked:false,archetype:null};
