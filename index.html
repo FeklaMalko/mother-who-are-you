@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f1e8">
+  <meta name="description" content="16 вопросов, 8 материнских архетипов и семейный быт, который опять сам себя не организовал.">
+  <meta property="og:title" content="МАТЬ, ТЫ КТО ВООБЩЕ?">
+  <meta property="og:description" content="16 вопросов, 8 типов материнства. Спойлер: кто в семье главный — вряд ли ты.">
+  <meta property="og:type" content="website">
+  <title>МАТЬ, ТЫ КТО ВООБЩЕ? — 16 вопросов. 8 типов материнства.</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">К содержанию</a>
+  <header class="site-header">
+    <a class="wordmark" href="#top" aria-label="Мать, ты кто вообще?">МАТЬ<span>?</span></a>
+    <div class="header-note">СЕМЕЙНЫЙ БЫТ / БЕЗ МАТЕРИНСКОГО ЭКЗАМЕНА</div>
+    <div class="edition">16 ВОПРОСОВ <b>✳</b> 8 АРХЕТИПОВ</div>
+  </header>
+  <main id="main">
+    <section id="screen-home" class="screen is-active" aria-labelledby="hero-title">
+      <section class="hero" id="top">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="eyebrow-dot"></span> НЕ ПСИХОДИАГНОСТИКА / ЗАТО УЗНАВАЕМО</p>
+          <h1 id="hero-title">МАТЬ,<br>ТЫ КТО<br><em>ВООБЩЕ?</em></h1>
+          <p class="hero-subtitle">16 вопросов. 8 типов материнства. И один большой вопрос: какого хрена всё опять на тебе?</p>
+          <div class="hero-actions">
+            <button class="button button-black" id="start-btn">УЗНАТЬ, ЧТО СО МНОЙ <span aria-hidden="true">↗</span></button>
+            <span class="hero-micro">БЕЗ РЕГИСТРАЦИИ<br>С МАТОМ. С ЛЮБОВЬЮ К АБСУРДУ.</span>
+          </div>
+        </div>
+        <div class="hero-art" aria-label="Многорукая мама с календарём, кофе и рюкзаком">
+          <div class="art-stamp">МАМА<br>НА СВЯЗИ<br><b>✳ 24/7?</b></div>
+          <img src="assets/staff.svg" alt="Многорукая мама одновременно держит календарь, рюкзак и кофе">
+          <span class="hero-caption">КАЛЕНДАРЬ СНОВА САМ СЕБЯ НЕ ЗАПОЛНИЛ</span>
+          <span class="hero-number">№ 01</span>
+        </div>
+        <div class="hero-bottom"><span>ЛЮБИШЬ СЕМЬЮ — НЕ ОБЯЗАНА ЛЮБИТЬ КАЖДЫЙ ЧАТ</span><span>ПРОКРУТИ ↓</span></div>
+      </section>
+      <section class="manifesto" aria-label="О тесте">
+        <p class="eyebrow">КРАТКАЯ ИНСТРУКЦИЯ ПО ВЫЖИВАНИЮ</p>
+        <div class="manifesto-grid">
+          <h2>НЕ ХОРОШАЯ.<br>НЕ ПЛОХАЯ.<br><span>ПРОСТО МАТЬ.</span></h2>
+          <p>Тут не выдают медали за идеальное воспитание и не считают поделки за душу. Только восемь бытовых режимов, школьные чаты и попытка понять, почему запасная футболка опять в холодильнике. Выбирай честно. Или хотя бы смешно.</p>
+        </div>
+        <div class="manifesto-mark">МАТЬ<br>НЕ<br>БОТ</div>
+      </section>
+    </section>
+
+    <section id="screen-date" class="screen step-screen" aria-labelledby="date-title" hidden>
+      <div class="step-kicker"><span>ШАГ 01 / 02</span><span>ЗНАК НЕ ВЛИЯЕТ НА РЕЗУЛЬТАТ</span></div>
+      <div class="date-layout">
+        <div class="step-copy">
+          <p class="eyebrow">КОСМИЧЕСКИЙ БЫТОВОЙ БОНУС</p>
+          <h2 id="date-title">КОГДА ТЫ<br>РОДИЛАСЬ<span>?</span></h2>
+          <p class="step-lead">Дата добавит к итоговому архетипу шуточное прочтение знака — посмотрим, что звёзды думают о семейном чате.</p>
+          <p class="fineprint">Без времени, места и ретроградных оправданий. Астрология здесь только ради шутки, не влияет на баллы; дата не сохраняется и не попадёт на карточку.</p>
+        </div>
+        <div class="date-control">
+          <label for="birth-date">ТВОЯ ДАТА РОЖДЕНИЯ <span>(НЕОБЯЗАТЕЛЬНО)</span></label>
+          <input id="birth-date" type="date" autocomplete="bday">
+          <p id="date-error" class="field-error" role="alert"></p>
+          <button class="button button-blue" id="date-continue">ПОЕХАЛИ <span aria-hidden="true">↗</span></button>
+          <button class="text-button" id="date-skip">ПРОПУСТИТЬ АСТРОЛОГИЮ →</button>
+          <button class="back-link" id="date-back">← НАЗАД</button>
+        </div>
+      </div>
+      <span class="side-note">ЭТО НЕ ВАЛИДИРОВАННЫЙ ИНСТРУМЕНТ. ВАЛИДИРОВАНА ТОЛЬКО УСТАЛОСТЬ.</span>
+    </section>
+
+    <section id="screen-quiz" class="screen quiz-screen" aria-labelledby="question-title" hidden>
+      <div class="quiz-shell">
+        <div class="quiz-top"><span class="eyebrow">ИНТЕРРОГАЦИЯ / <b id="q-counter">01 / 16</b></span><button class="text-button quiz-back" id="quiz-back">← НАЗАД</button></div>
+        <div class="progress-meta"><span>СЕМЕЙНАЯ СИТУАЦИЯ</span><span id="q-percent">0%</span></div>
+        <div class="progress-track" role="progressbar" aria-label="Прогресс теста" aria-valuemin="0" aria-valuemax="16" aria-valuenow="0"><span id="progress-fill"></span></div>
+        <div class="question-wrap">
+          <div class="question-number" id="big-number">01</div>
+          <div class="question-content"><p class="eyebrow">ОТВЕЧАЙ КАК ЕСТЬ. НИКТО НЕ СТАВИТ ОЦЕНКУ.</p><h2 id="question-title" tabindex="-1"></h2><div class="answer-list" id="answers" role="group" aria-labelledby="question-title"></div><p class="question-foot">ВЫБЕРИ САМЫЙ ПОХОЖИЙ ВАРИАНТ — ДАЛЬШЕ ПЕРЕЙДЁМ САМИ</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-result" class="screen result-screen" aria-labelledby="result-title" hidden>
+      <div class="result-hero">
+        <div class="result-image-frame"><img id="result-image" src="assets/staff.svg" alt=""></div>
+        <div class="result-title-wrap"><p class="eyebrow">ДИАГНОЗ: СЕМЕЙНЫЙ (НЕНАУЧНЫЙ)</p><p class="result-pretitle">ТВОЯ ДОМАШНЯЯ ДОЛЖНОСТЬ</p><h2 id="result-title"></h2><p id="result-short" class="result-short"></p><div class="result-label">ВОТ ТАК <b>?</b></div></div>
+      </div>
+      <div class="result-body">
+        <article class="roast-card"><p class="eyebrow">ТВОЙ ПЕРСОНАЛЬНЫЙ РАЗНОС</p><div id="result-roast" class="long-copy"></div></article>
+        <div class="result-columns">
+          <article class="result-list-card strengths"><p class="eyebrow">ТРИ ШТУКИ, КОТОРЫЕ У ТЕБЯ ПОЛУЧАЮТСЯ</p><ul id="result-strengths"></ul></article>
+          <article class="result-list-card habits"><p class="eyebrow">ТРИ ПРИВЫЧКИ, КОТОРЫЕ ДЕЛАЮТ БЫТ ГРОМЧЕ</p><ul id="result-habits"></ul></article>
+        </div>
+        <article class="situations-card"><div><p class="eyebrow">ПЯТЬ СЕРИЙ ИЗ ТВОЕГО ДОМАШНЕГО СИТКОМА</p><h3>ЗНАКОМО?<br><span>ЕЩЁ БЫ.</span></h3></div><ol id="result-situations"></ol></article>
+        <article class="tips-card"><p class="eyebrow">ТРИ ШАГА К МЕНЬШЕМУ ПИЗДЕЦУ</p><ol id="result-tips"></ol></article>
+        <article id="astro-block" class="astro-card" hidden><div class="astro-header"><p class="eyebrow">КОСМОС ТОЖЕ В РОДИТЕЛЬСКОМ ЧАТЕ</p><span id="zodiac-name"></span></div><p id="astro-copy" class="astro-copy"></p><p class="fineprint">Астрология — развлекательная выдумка, не диагноз и не разрешение спорить с ребёнком от имени Меркурия.</p></article>
+        <section class="share-section" aria-labelledby="share-title"><div class="share-copy"><p class="eyebrow">УПАКУЙ СВОЙ СЕМЕЙНЫЙ ПИЗДЕЦ</p><h3 id="share-title">ПОКАЖИ<br>СВОЙ ТИП.</h3><p id="result-quote" class="result-quote"></p><p class="fineprint">Дата рождения на карточку не попадёт.</p></div><div class="share-card-preview"><canvas id="share-card" width="1200" height="630" aria-label="Карточка результата"></canvas><img id="card-illustration" src="assets/staff.svg" alt="" hidden></div></section>
+        <div class="share-actions"><button class="button button-black" id="share-btn">ПОДЕЛИТЬСЯ <span aria-hidden="true">↗</span></button><button class="button button-outline" id="download-btn">СКАЧАТЬ PNG ↓</button><button class="button button-outline" id="copy-btn">СКОПИРОВАТЬ ТЕКСТ</button><button class="text-button" id="retake-btn">ПРОЙТИ ЕЩЁ РАЗ ↻</button></div><p id="share-status" class="share-status" role="status" aria-live="polite"></p>
+      </div>
+      <p class="result-disclaimer">Авторский развлекательный тест, не оценивает материнство. Все выводы можно оспорить, желательно после сна.</p>
+    </section>
+  </main>
+  <footer class="site-footer"><span>МАТЬ? / КАРТОЧКА СЕМЕЙНОГО БАРДАКА</span><span>НЕ СОБИРАЕМ ДАННЫЕ <b>✳</b></span></footer>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
