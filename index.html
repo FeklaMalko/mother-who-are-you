@@ -10,7 +10,7 @@
   <meta property="og:type" content="website">
   <title>МАТЬ, ТЫ КТО ВООБЩЕ? — 16 вопросов. 8 типов материнства.</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=mobile-line-height-1">
+  <link rel="stylesheet" href="styles.css?v=age-routes-1">
   <script type="module" src="app.js"></script>
 </head>
 <body>
@@ -50,8 +50,47 @@
       </section>
     </section>
 
+    <section id="screen-profile" class="screen step-screen" aria-labelledby="profile-title" hidden>
+      <div class="step-kicker"><span>ШАГ 01 / 03</span><span>ВОПРОСЫ ПОДСТРОЯТСЯ ПОД ТВОЮ СЕМЬЮ</span></div>
+      <div class="date-layout profile-layout">
+        <div class="step-copy">
+          <p class="eyebrow">СНАЧАЛА РАЗБЕРЁМСЯ, О КАКОЙ СЕМЬЕ РЕЧЬ</p>
+          <h2 id="profile-title">КАКОГО<br>ВОЗРАСТА<br>ДЕТИ<span>?</span></h2>
+          <p class="step-lead">Отметь все подходящие варианты: если дети разного возраста, тест соберёт смешанный маршрут вопросов.</p>
+          <p class="fineprint">Укажи свой возрастной диапазон — получишь отдельный ракурс к результату. Точная дата не нужна. Ответы останутся в этой вкладке и никуда не отправятся.</p>
+        </div>
+        <div class="profile-control">
+          <fieldset>
+            <legend>ВОЗРАСТ ДЕТЕЙ — МОЖНО ВЫБРАТЬ НЕСКОЛЬКО</legend>
+            <div class="stage-options" id="child-age-options">
+              <label class="stage-option"><input type="checkbox" name="child-stage" value="baby"><span><b>0–2 года</b><small>Младенцы и малыши</small></span></label>
+              <label class="stage-option"><input type="checkbox" name="child-stage" value="preschool"><span><b>3–6 лет</b><small>Сад, игры, сборы</small></span></label>
+              <label class="stage-option"><input type="checkbox" name="child-stage" value="school"><span><b>7–12 лет</b><small>Школа и самостоятельность</small></span></label>
+              <label class="stage-option"><input type="checkbox" name="child-stage" value="teen"><span><b>13–17 лет</b><small>Подростки и границы</small></span></label>
+              <label class="stage-option"><input type="checkbox" name="child-stage" value="adult"><span><b>18+ лет</b><small>Взрослые дети</small></span></label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>А ТЕБЕ СКОЛЬКО ЛЕТ?</legend>
+            <p class="profile-hint">Возраст не влияет на архетип — он добавит контекст к разбору.</p>
+            <div class="age-band-options" id="mother-age-options">
+              <label><input type="radio" name="mother-age" value="18-24"><span>18–24</span></label>
+              <label><input type="radio" name="mother-age" value="25-34"><span>25–34</span></label>
+              <label><input type="radio" name="mother-age" value="35-44"><span>35–44</span></label>
+              <label><input type="radio" name="mother-age" value="45-54"><span>45–54</span></label>
+              <label><input type="radio" name="mother-age" value="55+"><span>55+</span></label>
+              <label><input type="radio" name="mother-age" value="skip"><span>Не укажу</span></label>
+            </div>
+          </fieldset>
+          <p id="profile-error" class="field-error" role="alert"></p>
+          <button class="button button-blue" id="profile-continue" disabled>СОБРАТЬ МОЙ МАРШРУТ <span aria-hidden="true">↗</span></button>
+          <button class="back-link" id="profile-back">← НАЗАД</button>
+        </div>
+      </div>
+    </section>
+
     <section id="screen-date" class="screen step-screen" aria-labelledby="date-title" hidden>
-      <div class="step-kicker"><span>ШАГ 01 / 02</span><span>ЗНАК НЕ ВЛИЯЕТ НА РЕЗУЛЬТАТ</span></div>
+      <div class="step-kicker"><span>ШАГ 02 / 03</span><span>ЗНАК НЕ ВЛИЯЕТ НА РЕЗУЛЬТАТ</span></div>
       <div class="date-layout">
         <div class="step-copy">
           <p class="eyebrow">КОСМИЧЕСКИЙ БЫТОВОЙ БОНУС</p>
@@ -78,7 +117,7 @@
         <div class="progress-track" role="progressbar" aria-label="Прогресс теста" aria-valuemin="0" aria-valuemax="16" aria-valuenow="0"><span id="progress-fill"></span></div>
         <div class="question-wrap">
           <div class="question-number" id="big-number">01</div>
-          <div class="question-content"><p class="eyebrow">ОТВЕЧАЙ КАК ЕСТЬ. НИКТО НЕ СТАВИТ ОЦЕНКУ.</p><h2 id="question-title" tabindex="-1"></h2><div class="answer-list" id="answers" role="group" aria-labelledby="question-title"></div><p class="question-foot">ВЫБЕРИ САМЫЙ ПОХОЖИЙ ВАРИАНТ — ДАЛЬШЕ ПЕРЕЙДЁМ САМИ</p></div>
+          <div class="question-content"><p class="eyebrow" id="question-stage">ВОПРОС ДЛЯ ЛЮБОГО ВОЗРАСТА</p><h2 id="question-title" tabindex="-1"></h2><div class="answer-list" id="answers" role="group" aria-labelledby="question-title"></div><p class="question-foot">ВЫБЕРИ САМЫЙ ПОХОЖИЙ ВАРИАНТ — ДАЛЬШЕ ПЕРЕЙДЁМ САМИ</p></div>
         </div>
       </div>
     </section>
@@ -90,6 +129,7 @@
       </div>
       <div class="result-body">
         <article class="roast-card"><p class="eyebrow">ТВОЙ ПЕРСОНАЛЬНЫЙ РАЗНОС</p><div id="result-roast" class="long-copy"></div></article>
+        <article class="age-context-card"><p class="eyebrow">ТВОЙ МАРШРУТ И ВОЗРАСТНОЙ РАКУРС</p><p id="result-stage-context"></p><p id="result-mother-age"></p></article>
         <div class="result-columns">
           <article class="result-list-card strengths"><p class="eyebrow">ТРИ ШТУКИ, КОТОРЫЕ У ТЕБЯ ПОЛУЧАЮТСЯ</p><ul id="result-strengths"></ul></article>
           <article class="result-list-card habits"><p class="eyebrow">ТРИ ПРИВЫЧКИ, КОТОРЫЕ ДЕЛАЮТ БЫТ ГРОМЧЕ</p><ul id="result-habits"></ul></article>
