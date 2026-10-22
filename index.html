@@ -11,7 +11,7 @@
   <title>МАТЬ, ТЫ КТО ВООБЩЕ? — 16 вопросов. 8 типов материнства.</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css?v=age-routes-1">
-  <script type="module" src="app.js?v=child-age-entry-2"></script>
+  <script type="module" src="app.js?v=family-quiz-redesign-1"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">К содержанию</a>
@@ -26,7 +26,7 @@
         <div class="hero-copy">
           <p class="eyebrow"><span class="eyebrow-dot"></span> НЕ ПСИХОДИАГНОСТИКА / ЗАТО УЗНАВАЕМО</p>
           <h1 id="hero-title">МАТЬ,<br>ТЫ КТО<br><em>ВООБЩЕ?</em></h1>
-          <p class="hero-subtitle">От ночных кормлений и малыша в песочнице до школьного чата и подросткового «не начинай». Один ребёнок или целая команда — какого хрена всё опять на тебе?</p>
+          <p class="hero-subtitle">16 семейных ситуаций, 8 режимов материнства и ни одной медали за подвиг с утра. Выбирай реакцию, которую правда включаешь, а не ту, которую одобрила бы комиссия.</p>
           <div class="hero-actions">
             <button class="button button-black" id="start-btn">УЗНАТЬ, ЧТО СО МНОЙ <span aria-hidden="true">↗</span></button>
             <span class="hero-micro">БЕЗ РЕГИСТРАЦИИ<br>С МАТОМ. С ЛЮБОВЬЮ К АБСУРДУ.</span>
@@ -44,68 +44,53 @@
         <p class="eyebrow">КРАТКАЯ ИНСТРУКЦИЯ ПО ВЫЖИВАНИЮ</p>
         <div class="manifesto-grid">
           <h2>НЕ ХОРОШАЯ.<br>НЕ ПЛОХАЯ.<br><span>ПРОСТО МАТЬ.</span></h2>
-          <p>Тут не выдают медали за идеальное воспитание и не считают поделки за душу. Тут узнают себя и мама младенца, и мама нескольких детей разного возраста, и мама подростка. Восемь бытовых режимов, недосып, сборы, сад и школа — без зачёта на хорошую мать. Выбирай честно. Или хотя бы смешно.</p>
+          <p>Короткие бытовые сцены. Выбирай привычную реакцию, а не ответ для родительского собрания. Это сатирический тест, не диагноз и не аттестация на мать года.</p>
         </div>
         <div class="manifesto-mark">МАТЬ<br>НЕ<br>БОТ</div>
       </section>
     </section>
 
     <section id="screen-profile" class="screen step-screen" aria-labelledby="profile-title" hidden>
-      <div class="step-kicker"><span>ШАГ 01 / 03</span><span>ВОПРОСЫ ПОДСТРОЯТСЯ ПОД ТВОЮ СЕМЬЮ</span></div>
+      <div class="step-kicker"><span>ШАГ 01 / 02</span><span>ВОЗРАСТЫ — ДЛЯ СЦЕН, ЗНАК — ДЛЯ ШУТКИ</span></div>
       <div class="date-layout profile-layout">
         <div class="step-copy">
-          <p class="eyebrow">СНАЧАЛА РАЗБЕРЁМСЯ, КАКОЙ У ВАС ДОМА СОСТАВ</p>
-          <h2 id="profile-title">СКОЛЬКО<br>ВАС ТУТ<span>?</span></h2>
-          <p class="step-lead">Укажи число детей и возраст каждого. Посмотрим на погодков, разные режимы и семейную логистику без гадания по одной галочке.</p>
-          <p class="fineprint">Это бытовой контекст для шутливого результата, не оценка психического здоровья. Возрасты останутся в этой вкладке и никуда не отправятся.</p>
+          <p class="eyebrow">МИНИ-АНКЕТА. ОБЕЩАЕМ, ПОСЛЕДНЯЯ.</p>
+          <h2 id="profile-title">ДВА ДЕЛА.<br>ОДИН ЭКРАН<span>.</span></h2>
+          <p class="step-lead">Возраст каждого ребёнка настроит сцены. Твоя дата рождения добавит шуточный солнечный знак. Потом — 16 ситуаций без вступления на три страницы.</p>
+          <p class="fineprint">Результат развлекательный, не психологический диагноз. Дата и возраст используются только в этой вкладке и не сохраняются.</p>
         </div>
         <div class="profile-control">
           <fieldset>
             <label class="profile-legend" for="child-count">СКОЛЬКО ДЕТЕЙ В СЕМЬЕ?</label>
-            <p class="profile-hint">Всех, чьи возрасты хочешь учесть. Да, семейный отдел кадров опять у мамы.</p>
+            <p class="profile-hint">Учитывай всех детей. Да, отдел кадров семьи опять у тебя.</p>
             <input id="child-count" class="child-count-input" type="number" min="1" max="20" step="1" value="1" inputmode="numeric">
           </fieldset>
           <fieldset>
             <legend>ВОЗРАСТ КАЖДОГО РЕБЁНКА</legend>
-            <p class="profile-hint">Укажи полные годы для каждого ребёнка; если ему ещё нет года, введи 0. Месяцы уже стоят на нуле — меняй их, только если хочешь точнее указать возраст. Наконец-то поле, которое не требует заполнить всё до последней ячейки.</p>
+            <p class="profile-hint">Полные годы обязательны; до года — введи 0. Месяцы уже на нуле, меняй по желанию.</p>
             <div id="child-age-entries" class="child-age-entries"></div>
           </fieldset>
+          <fieldset class="birthdate-fieldset">
+            <label class="profile-legend" for="birth-date">ДАТА РОЖДЕНИЯ <span>(НЕОБЯЗАТЕЛЬНО, ДЛЯ ГОРОСКОПА)</span></label>
+            <input id="birth-date" type="date" autocomplete="bday">
+            <p class="profile-hint">Солнечный знак добавит шутку к результату, но не повлияет на тип.</p>
+          </fieldset>
           <p id="profile-error" class="field-error" role="alert"></p>
-          <button class="button button-blue" id="profile-continue" disabled>СОБРАТЬ МОЙ МАРШРУТ <span aria-hidden="true">↗</span></button>
+          <p id="date-error" class="field-error" role="alert"></p>
+          <button class="button button-blue" id="profile-continue" disabled>К 16 СЕМЕЙНЫМ СИТУАЦИЯМ <span aria-hidden="true">↗</span></button>
           <button class="back-link" id="profile-back">← НАЗАД</button>
         </div>
       </div>
     </section>
 
-    <section id="screen-date" class="screen step-screen" aria-labelledby="date-title" hidden>
-      <div class="step-kicker"><span>ШАГ 02 / 03</span><span>ЗНАК НЕ ВЛИЯЕТ НА РЕЗУЛЬТАТ</span></div>
-      <div class="date-layout">
-        <div class="step-copy">
-          <p class="eyebrow">КОСМИЧЕСКИЙ БЫТОВОЙ БОНУС</p>
-          <h2 id="date-title">КОГДА ТЫ<br>РОДИЛАСЬ<span>?</span></h2>
-          <p class="step-lead">По дню и месяцу узнаем твой солнечный знак, а потом столкнём его с материнским архетипом. Звёзды наконец получат конкретную работу.</p>
-          <p class="fineprint">Время и место рождения для полной натальной карты здесь не спрашиваем: это шуточный прогноз по солнечному знаку. Дата не сохраняется и не попадёт на карточку.</p>
-        </div>
-        <div class="date-control">
-          <label for="birth-date">ТВОЯ ДАТА РОЖДЕНИЯ <span>(ДЛЯ СОЛНЕЧНОГО ЗНАКА)</span></label>
-          <input id="birth-date" type="date" autocomplete="bday">
-          <p id="date-error" class="field-error" role="alert"></p>
-          <button class="button button-blue" id="date-continue">ПОЕХАЛИ <span aria-hidden="true">↗</span></button>
-          <button class="text-button" id="date-skip">ПРОПУСТИТЬ АСТРОЛОГИЮ →</button>
-          <button class="back-link" id="date-back">← НАЗАД</button>
-        </div>
-      </div>
-      <span class="side-note">ЭТО НЕ ВАЛИДИРОВАННЫЙ ИНСТРУМЕНТ. ВАЛИДИРОВАНА ТОЛЬКО УСТАЛОСТЬ.</span>
-    </section>
-
     <section id="screen-quiz" class="screen quiz-screen" aria-labelledby="question-title" hidden>
       <div class="quiz-shell">
-        <div class="quiz-top"><span class="eyebrow">ИНТЕРРОГАЦИЯ / <b id="q-counter">01 / 16</b></span><button class="text-button quiz-back" id="quiz-back">← НАЗАД</button></div>
-        <div class="progress-meta"><span>СЕМЕЙНАЯ СИТУАЦИЯ</span><span id="q-percent">0%</span></div>
+        <div class="quiz-top"><span class="eyebrow">ДОМАШНЯЯ ДОЛЖНОСТЬ / <b id="q-counter">01 / 16</b></span><button class="text-button quiz-back" id="quiz-back">← НАЗАД</button></div>
+        <div class="progress-meta"><span>КАК ТЫ ОБЫЧНО РЕАГИРУЕШЬ</span><span id="q-percent">0%</span></div>
         <div class="progress-track" role="progressbar" aria-label="Прогресс теста" aria-valuemin="0" aria-valuemax="16" aria-valuenow="0"><span id="progress-fill"></span></div>
         <div class="question-wrap">
           <div class="question-number" id="big-number">01</div>
-          <div class="question-content"><p class="eyebrow" id="question-stage">ВОПРОС ДЛЯ ЛЮБОГО ВОЗРАСТА</p><h2 id="question-title" tabindex="-1"></h2><div class="answer-list" id="answers" role="group" aria-labelledby="question-title"></div><p class="question-foot">ВЫБЕРИ САМЫЙ ПОХОЖИЙ ВАРИАНТ — ДАЛЬШЕ ПЕРЕЙДЁМ САМИ</p></div>
+          <div class="question-content"><p class="eyebrow" id="question-stage">СЕМЕЙНАЯ СИТУАЦИЯ</p><h2 id="question-title" tabindex="-1"></h2><div class="answer-list" id="answers" role="group" aria-labelledby="question-title"></div><p class="question-foot">Не идеальную реакцию. Свою обычную.</p></div>
         </div>
       </div>
     </section>
@@ -113,7 +98,7 @@
     <section id="screen-result" class="screen result-screen" aria-labelledby="result-title" hidden>
       <div class="result-hero">
         <div class="result-image-frame"><img id="result-image" src="assets/staff.svg" alt=""></div>
-        <div class="result-title-wrap"><p class="eyebrow">ДИАГНОЗ: СЕМЕЙНЫЙ (НЕНАУЧНЫЙ)</p><p class="result-pretitle">ТВОЯ ДОМАШНЯЯ ДОЛЖНОСТЬ</p><h2 id="result-title"></h2><p id="result-short" class="result-short"></p><div class="result-label">ВОТ ТАК <b>?</b></div></div>
+        <div class="result-title-wrap"><p class="eyebrow">СЕМЕЙНЫЙ ПАТТЕРН / НЕ ДИАГНОЗ</p><p class="result-pretitle">ТВОЯ ДОМАШНЯЯ ДОЛЖНОСТЬ</p><h2 id="result-title"></h2><p id="result-short" class="result-short"></p><div class="result-label">ВОТ ТАК <b>?</b></div></div>
       </div>
       <div class="result-body">
         <article class="roast-card"><p class="eyebrow">ТВОЙ ПЕРСОНАЛЬНЫЙ РАЗНОС</p><div id="result-roast" class="long-copy"></div></article>

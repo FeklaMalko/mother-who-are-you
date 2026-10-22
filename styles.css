@@ -7,6 +7,8 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 /* Individual child ages and sibling spacing */
 .profile-legend{font-size:10px;font-weight:800;letter-spacing:.1em;margin-bottom:10px;display:block}
+.profile-legend span{font-size:9px;letter-spacing:.04em;color:#555}
+#birth-date{width:100%;min-height:46px;padding:8px 12px;background:var(--paper);border:1.5px solid var(--ink);font-weight:700}
 .child-count-input{width:100%;min-height:46px;padding:8px 12px;background:var(--paper);border:1.5px solid var(--ink);font-weight:800}
 .child-age-entries{display:grid;gap:9px}
 .child-age-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px;padding:10px 12px;background:var(--paper);border:1.5px solid var(--ink)}
