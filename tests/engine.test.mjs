@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { archetypes, questions, zodiacSigns, zodiacReadings, astroCombinations, getAstroCombination, zodiacSign, scoreAnswers } from '../engine.js';
+import { archetypes, questions, zodiacSigns, zodiacReadings, astroCombinations, getAstroCombination, getQuestions, zodiacSign, scoreAnswers } from '../engine.js';
 
 test('quiz has sixteen distinct prompts and four scored options each', () => {
   assert.equal(questions.length, 16);
@@ -13,6 +13,24 @@ test('quiz has sixteen distinct prompts and four scored options each', () => {
       assert.ok(archetypes.some(type => type.id in option.scores));
     }
   }
+});
+
+test('each child age route keeps eight age-matched situations inside the 16-question flow', () => {
+  const routes = ['baby', 'preschool', 'school', 'teen', 'adult'];
+  for (const stage of routes) {
+    const routeQuestions = getQuestions([stage]);
+    assert.equal(routeQuestions.length, 16, stage);
+    assert.equal(routeQuestions.filter(q => q.stageId === stage).length, 8, stage);
+    for (const question of routeQuestions) {
+      assert.equal(question.options.length, 4);
+      assert.ok(question.options.every(option => option.label.length > 12));
+    }
+  }
+  assert.match(getQuestions(['baby'])[8].text, /малыш|сон|прогулк|режим/i);
+  assert.match(getQuestions(['teen'])[8].text, /подрост|планы|телефон/i);
+  assert.match(getQuestions(['adult'])[8].text, /взросл|семейн/i);
+  assert.equal(getQuestions(['baby', 'teen']).filter(q => q.stageId === 'baby').length, 4);
+  assert.equal(getQuestions(['baby', 'teen']).filter(q => q.stageId === 'teen').length, 4);
 });
 
 test('all eight archetypes are reachable and have a stable tie rule', () => {
@@ -31,15 +49,15 @@ test('all eight archetypes are reachable and have a stable tie rule', () => {
   assert.equal(scoreAnswers([]).archetype.id, archetypes[0].id);
 });
 
-test('each archetype has every required editorial field and a 150–250 word roast', () => {
+test('each archetype has every required editorial field and a 200–300 word roast', () => {
   for (const type of archetypes) {
-    assert.ok(type.title && type.short && type.quote && type.illustration);
+    assert.ok(type.title && type.short && type.quote && type.motto && type.illustration && type.deepDive);
     assert.equal(type.situations.length, 5, type.id);
     assert.equal(type.strengths.length, 3, type.id);
     assert.equal(type.habits.length, 3, type.id);
     assert.equal(type.tips.length, 3, type.id);
-    const words = `${type.roast} ${type.roastMore}`.trim().split(/\s+/).length;
-    assert.ok(words >= 150 && words <= 250, `${type.id}: ${words} words`);
+    const words = `${type.roast} ${type.roastMore} ${type.deepDive}`.trim().split(/\s+/).length;
+    assert.ok(words >= 200 && words <= 300, `${type.id}: ${words} words`);
   }
 });
 
