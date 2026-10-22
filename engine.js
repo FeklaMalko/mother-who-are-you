@@ -93,12 +93,23 @@ export function childStageForMonths(months){
   if(!Number.isFinite(months)||months<0)return null;
   if(months<36)return'baby';if(months<84)return'preschool';if(months<156)return'school';if(months<216)return'teen';return'adult';
 }
-export function getFamilyDynamicsReading(childAgesMonths=[]){
+export function getFamilyDynamicsReading(childAgesMonths=[],typeId='staff'){
   const ages=childAgesMonths.filter(age=>Number.isInteger(age)&&age>=0).sort((a,b)=>a-b);
   if(!ages.length)return'';
   const plural=(n,one,few,many)=>{const mod100=n%100,mod10=n%10;return mod100>=11&&mod100<=14?many:mod10===1?one:mod10>=2&&mod10<=4?few:many;};
   const formatAge=months=>months<12?`${months} ${plural(months,'месяц','месяца','месяцев')}`:`${Math.floor(months/12)} ${plural(Math.floor(months/12),'год','года','лет')}${months%12?` ${months%12} мес.`:''}`;
-  if(ages.length===1)return `В семье один ребёнок, ему ${formatAge(ages[0])}. Возраст нужен для подбора сцен; тип результата определяют твои ответы.`;
+  const typeJabs={
+    staff:'Ты всё равно пытаешься собрать их расписания в одну голову. Штаб не получает выходной за то, что миссия маленькая.',
+    queen:'Количество детей не отменяет право закрыть приёмную. Даже один человек умеет произнести «мам» с интонацией срочного совещания.',
+    detective:'Возраст меняет улики: от сна и пропавшей варежки до прочитанного сообщения без ответа. Версия «я всё выясню сама» по-прежнему подозрительна.',
+    relaxed:'Число детей не измеряет нагрузку. Можно отпустить идеальную картинку и всё-таки заметить, кому сейчас нужна помощь.',
+    rescue:'Ты не обязана выезжать на каждый семейный сигнал. Даже если умеешь добраться туда быстрее, чем остальные находят номер телефона.',
+    chat:'Твой семейный чат мог бы быть короче на 86 сообщений, если бы люди читали закреп. Но где тогда твоя должность модератора хаоса?',
+    enlightened:'У каждого свой возраст, у тебя — всё та же нервная система. Она не стала многоразовой от количества прочитанных книг.',
+    circus:'Разные возраста — разные зрители и разные требования к реквизиту. Только уборщица в финале почему-то всегда одна.'
+  };
+  const ageList=ages.map(formatAge);
+  if(ages.length===1)return `У тебя один ребёнок: ${ageList[0]}. Это не «лёгкая версия», а конкретный возраст со своим расписанием и сюжетом. ${typeJabs[typeId]||typeJabs.staff}`;
   const gaps=ages.slice(1).map((age,index)=>{
     const gap=age-ages[index];
     const label=gap===0?'ровесники':gap<24?'почти погодки':gap<60?'разница 2–4 года':'большая разница';
@@ -106,7 +117,10 @@ export function getFamilyDynamicsReading(childAgesMonths=[]){
   });
   const young=ages.filter(age=>age<36).length;
   const overlap=young>=2?` У ${young} детей до трёх лет режимы могут накладываться.`:'';
-  return `В семье ${ages.length} ${plural(ages.length,'ребёнок','ребёнка','детей')}; разница между возрастами: ${gaps.join(', ')}.${overlap} Это контекст для сцен, не оценка нагрузки. Тип результата определяют твои ответы.`;
+  const stages=[...new Set(ages.map(childStageForMonths).filter(Boolean))].map(id=>childAgeStages.find(stage=>stage.id===id)?.label).filter(Boolean);
+  const mix=stages.length>1?` Сейчас в семье одновременно: ${stages.join(' + ')}.`:'';
+  const close=ages.some((age,index)=>index>0&&age-ages[index]<24)?' Погодки или почти погодки: передышка между этапами иногда выглядит как смена караула, только караул тоже ты.':'';
+  return `У тебя ${ages.length} ${plural(ages.length,'ребёнок','ребёнка','детей')}: ${ageList.join(', ')}; между соседями по семейному расписанию — ${gaps.join(', ')}.${mix}${overlap}${close} ${typeJabs[typeId]||typeJabs.staff}`;
 }
 
 const universalRows = [
@@ -269,6 +283,32 @@ export function scoreAnswers(answers,activeQuestions=questions){
   let winner=typeIds[0];
   for(const id of typeIds.slice(1))if(scores[id]>scores[winner])winner=id;
   return {archetype:archetypes.find(a=>a.id===winner),scores};
+}
+
+const personalizedTypeLines={
+  staff:'Ты выбирала варианты, где уже есть план, ответственный и запасной план. Ответственный, сюрприз, тоже ты.',
+  queen:'В ответах слышно: «я вас люблю, но приёмная закрыта». Семье осталось освоить табличку на двери.',
+  detective:'Ты замечаешь паузы, несостыковки и загадочное исчезновение вещей. Улики есть; иногда подозреваемый — просто уставший человек.',
+  relaxed:'Ты умеешь не открывать филиал паники из-за каждой мелочи. Иногда, правда, полезно выяснить, мелочь ли это для ребёнка.',
+  rescue:'Ты выбрала несколько способов срочно всех спасать. Пожарная часть семейная, бюджет ноль, диспетчер опять ты.',
+  chat:'Твои ответы хотят ясности, сроков и одного взрослого, который наконец прочитает закреп. То есть порядок в чате — твой личный сериал.',
+  enlightened:'Ты пытаешься подобрать слова всем участникам семейной драмы. Твой внутренний психолог уже выставил счёт кружкой холодного кофе.',
+  circus:'Ты умеешь превратить бытовую сцену в премьеру. Иногда зрители пришли просто поесть, а уборщица снова не указана в титрах.'
+};
+export function getPersonalizedReadout(answers,activeQuestions=questions,scores={}){
+  const ranking=Object.entries(scores).sort((a,b)=>b[1]-a[1]||typeIds.indexOf(a[0])-typeIds.indexOf(b[0]));
+  const primary=archetypes.find(type=>type.id===ranking[0]?.[0])||archetypes[0];
+  const secondaryEntry=ranking.find(([id,score])=>id!==primary.id&&score>0);
+  const secondary=archetypes.find(type=>type.id===secondaryEntry?.[0]);
+  const selected=answers.map((choice,index)=>({question:activeQuestions[index],option:activeQuestions[index]?.options[choice]})).filter(item=>item.question&&item.option);
+  const first=selected.find(item=>item.option.scores?.[primary.id])||selected[0];
+  const second=secondary?selected.find(item=>item!==first&&item.option.scores?.[secondary.id]):selected.find(item=>item!==first);
+  const evidence=[first,second].filter(Boolean).map(item=>({question:item.question.text,answer:item.option.label}));
+  const lead=secondary?`Главный режим — «${primary.title}». На подхвате — «${secondary.title}».`:`Сегодня весь эфир занял режим «${primary.title}». Второй голос в ответах почти не прорезался.`;
+  return {
+    summary:`${lead} ${personalizedTypeLines[primary.id]||personalizedTypeLines.staff}`,
+    evidence
+  };
 }
 
 export const zodiacSigns = ['Овен','Телец','Близнецы','Рак','Лев','Дева','Весы','Скорпион','Стрелец','Козерог','Водолей','Рыбы'];

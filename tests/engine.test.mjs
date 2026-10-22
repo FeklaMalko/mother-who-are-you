@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { archetypes, questions, zodiacSigns, zodiacReadings, astroCombinations, getAstroCombination, getQuestions, zodiacSign, scoreAnswers } from '../engine.js';
+import { archetypes, questions, zodiacSigns, zodiacReadings, astroCombinations, getAstroCombination, getQuestions, getFamilyDynamicsReading, getPersonalizedReadout, zodiacSign, scoreAnswers } from '../engine.js';
 
 test('quiz has sixteen distinct prompts and four scored options each', () => {
   assert.equal(questions.length, 16);
@@ -47,6 +47,27 @@ test('all eight archetypes are reachable and have a stable tie rule', () => {
   }
   assert.equal(targetIds.size, 8);
   assert.equal(scoreAnswers([]).archetype.id, archetypes[0].id);
+});
+
+test('result readout reflects the selected answer text and names the runner-up type', () => {
+  const answers = questions.map(q => q.options.findIndex(option => 'queen' in option.scores));
+  const result = scoreAnswers(answers);
+  const readout = getPersonalizedReadout(answers, questions, result.scores);
+  assert.equal(result.archetype.id, 'queen');
+  assert.match(readout.summary, /Королева/);
+  assert.ok(readout.evidence.length >= 1);
+  for (const clue of readout.evidence) {
+    assert.ok(answers.some((choice, index) => questions[index].text === clue.question && questions[index].options[choice].label === clue.answer));
+  }
+});
+
+test('family context names exact ages, close spacing, and the archetype voice', () => {
+  const reading = getFamilyDynamicsReading([6, 18, 96], 'queen');
+  assert.match(reading, /6 месяцев/);
+  assert.match(reading, /1 год 6 мес\./);
+  assert.match(reading, /8 лет/);
+  assert.match(reading, /Погодки или почти погодки/);
+  assert.match(reading, /приёмную закрыть|закрыть приёмную/i);
 });
 
 test('each archetype has every required editorial field and a 200–300 word roast', () => {

@@ -28,3 +28,5 @@
 .share-actions{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
 .share-actions .button{font-size:10px;letter-spacing:.06em;padding-inline:16px}
 @media(max-width:620px){.hero-art img{max-height:none}.result-image-frame img{aspect-ratio:4/5}.share-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.share-actions .button{min-height:48px;font-size:8px;letter-spacing:.035em;padding:0 8px}.share-actions #share-btn,.share-actions #retake-btn{grid-column:1/-1}.share-card-preview{box-shadow:5px 5px 0 var(--ink)}}
+
+.answer-evidence{margin:14px 0 0;padding-left:21px}.answer-evidence li{padding-left:4px;line-height:1.65}.answer-evidence li+li{margin-top:12px}.evidence-question{font-weight:500}.answer-evidence strong{font-weight:800}
