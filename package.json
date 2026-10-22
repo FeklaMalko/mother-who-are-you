@@ -1,0 +1,8 @@
+{
+  "name": "mother-who-are-you",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  }
+}
