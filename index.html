@@ -54,33 +54,21 @@
       <div class="step-kicker"><span>ШАГ 01 / 03</span><span>ВОПРОСЫ ПОДСТРОЯТСЯ ПОД ТВОЮ СЕМЬЮ</span></div>
       <div class="date-layout profile-layout">
         <div class="step-copy">
-          <p class="eyebrow">СНАЧАЛА РАЗБЕРЁМСЯ, О КАКОЙ СЕМЬЕ РЕЧЬ</p>
-          <h2 id="profile-title">КАКОГО<br>ВОЗРАСТА<br>ДЕТИ<span>?</span></h2>
-          <p class="step-lead">Отметь все подходящие варианты: если дети разного возраста, тест соберёт смешанный маршрут вопросов.</p>
-          <p class="fineprint">Укажи свой возрастной диапазон — получишь отдельный ракурс к результату. Точная дата не нужна. Ответы останутся в этой вкладке и никуда не отправятся.</p>
+          <p class="eyebrow">СНАЧАЛА РАЗБЕРЁМСЯ, КАКОЙ У ВАС ДОМА СОСТАВ</p>
+          <h2 id="profile-title">СКОЛЬКО<br>ВАС ТУТ<span>?</span></h2>
+          <p class="step-lead">Укажи число детей и возраст каждого. Посмотрим на погодков, разные режимы и семейную логистику без гадания по одной галочке.</p>
+          <p class="fineprint">Это бытовой контекст для шутливого результата, не оценка психического здоровья. Возрасты останутся в этой вкладке и никуда не отправятся.</p>
         </div>
         <div class="profile-control">
           <fieldset>
-            <legend>ВОЗРАСТ ДЕТЕЙ — МОЖНО ВЫБРАТЬ НЕСКОЛЬКО</legend>
-            <div class="stage-options" id="child-age-options">
-              <label class="stage-option"><input type="checkbox" name="child-stage" value="baby"><span><b>0–2 года</b><small>Младенцы и малыши</small></span></label>
-              <label class="stage-option"><input type="checkbox" name="child-stage" value="preschool"><span><b>3–6 лет</b><small>Сад, игры, сборы</small></span></label>
-              <label class="stage-option"><input type="checkbox" name="child-stage" value="school"><span><b>7–12 лет</b><small>Школа и самостоятельность</small></span></label>
-              <label class="stage-option"><input type="checkbox" name="child-stage" value="teen"><span><b>13–17 лет</b><small>Подростки и границы</small></span></label>
-              <label class="stage-option"><input type="checkbox" name="child-stage" value="adult"><span><b>18+ лет</b><small>Взрослые дети</small></span></label>
-            </div>
+            <label class="profile-legend" for="child-count">СКОЛЬКО ДЕТЕЙ В СЕМЬЕ?</label>
+            <p class="profile-hint">Всех, чьи возрасты хочешь учесть. Да, семейный отдел кадров опять у мамы.</p>
+            <input id="child-count" class="child-count-input" type="number" min="1" max="20" step="1" value="1" inputmode="numeric">
           </fieldset>
           <fieldset>
-            <legend>А ТЕБЕ СКОЛЬКО ЛЕТ?</legend>
-            <p class="profile-hint">Возраст не влияет на архетип — он добавит контекст к разбору.</p>
-            <div class="age-band-options" id="mother-age-options">
-              <label><input type="radio" name="mother-age" value="18-24"><span>18–24</span></label>
-              <label><input type="radio" name="mother-age" value="25-34"><span>25–34</span></label>
-              <label><input type="radio" name="mother-age" value="35-44"><span>35–44</span></label>
-              <label><input type="radio" name="mother-age" value="45-54"><span>45–54</span></label>
-              <label><input type="radio" name="mother-age" value="55+"><span>55+</span></label>
-              <label><input type="radio" name="mother-age" value="skip"><span>Не укажу</span></label>
-            </div>
+            <legend>ВОЗРАСТ КАЖДОГО РЕБЁНКА</legend>
+            <p class="profile-hint">Укажи полные годы и месяцы: так тест отличит погодков от большой разницы. Для взрослых детей месяцы можно оставить нулём.</p>
+            <div id="child-age-entries" class="child-age-entries"></div>
           </fieldset>
           <p id="profile-error" class="field-error" role="alert"></p>
           <button class="button button-blue" id="profile-continue" disabled>СОБРАТЬ МОЙ МАРШРУТ <span aria-hidden="true">↗</span></button>
@@ -95,11 +83,11 @@
         <div class="step-copy">
           <p class="eyebrow">КОСМИЧЕСКИЙ БЫТОВОЙ БОНУС</p>
           <h2 id="date-title">КОГДА ТЫ<br>РОДИЛАСЬ<span>?</span></h2>
-          <p class="step-lead">Дата добавит к итоговому архетипу шуточное прочтение знака — посмотрим, что звёзды думают о семейном чате.</p>
-          <p class="fineprint">Без времени, места и ретроградных оправданий. Астрология здесь только ради шутки, не влияет на баллы; дата не сохраняется и не попадёт на карточку.</p>
+          <p class="step-lead">По дню и месяцу узнаем твой солнечный знак, а потом столкнём его с материнским архетипом. Звёзды наконец получат конкретную работу.</p>
+          <p class="fineprint">Время и место рождения для полной натальной карты здесь не спрашиваем: это шуточный прогноз по солнечному знаку. Дата не сохраняется и не попадёт на карточку.</p>
         </div>
         <div class="date-control">
-          <label for="birth-date">ТВОЯ ДАТА РОЖДЕНИЯ <span>(НЕОБЯЗАТЕЛЬНО)</span></label>
+          <label for="birth-date">ТВОЯ ДАТА РОЖДЕНИЯ <span>(ДЛЯ СОЛНЕЧНОГО ЗНАКА)</span></label>
           <input id="birth-date" type="date" autocomplete="bday">
           <p id="date-error" class="field-error" role="alert"></p>
           <button class="button button-blue" id="date-continue">ПОЕХАЛИ <span aria-hidden="true">↗</span></button>
@@ -129,7 +117,7 @@
       </div>
       <div class="result-body">
         <article class="roast-card"><p class="eyebrow">ТВОЙ ПЕРСОНАЛЬНЫЙ РАЗНОС</p><div id="result-roast" class="long-copy"></div></article>
-        <article class="age-context-card"><p class="eyebrow">ТВОЙ МАРШРУТ И ВОЗРАСТНОЙ РАКУРС</p><p id="result-stage-context"></p><p id="result-mother-age"></p></article>
+        <article class="age-context-card"><p class="eyebrow">СОСТАВ СЕМЬИ И СЕМЕЙНЫЙ РИТМ</p><p id="result-stage-context"></p><p id="result-family-context"></p></article>
         <div class="result-columns">
           <article class="result-list-card strengths"><p class="eyebrow">ТРИ ШТУКИ, КОТОРЫЕ У ТЕБЯ ПОЛУЧАЮТСЯ</p><ul id="result-strengths"></ul></article>
           <article class="result-list-card habits"><p class="eyebrow">ТРИ ПРИВЫЧКИ, КОТОРЫЕ ДЕЛАЮТ БЫТ ГРОМЧЕ</p><ul id="result-habits"></ul></article>
