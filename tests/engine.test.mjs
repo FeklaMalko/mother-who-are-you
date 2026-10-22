@@ -68,6 +68,7 @@ test('family context names exact ages, close spacing, and the archetype voice', 
   assert.match(reading, /8 лет/);
   assert.match(reading, /Погодки или почти погодки/);
   assert.match(reading, /приёмную закрыть|закрыть приёмную/i);
+  assert.doesNotMatch(getFamilyDynamicsReading([6, 84], 'staff'), /Погодки или почти погодки/);
 });
 
 test('each archetype has every required editorial field and a 200–300 word roast', () => {

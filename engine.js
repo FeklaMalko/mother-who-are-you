@@ -119,7 +119,7 @@ export function getFamilyDynamicsReading(childAgesMonths=[],typeId='staff'){
   const overlap=young>=2?` У ${young} детей до трёх лет режимы могут накладываться.`:'';
   const stages=[...new Set(ages.map(childStageForMonths).filter(Boolean))].map(id=>childAgeStages.find(stage=>stage.id===id)?.label).filter(Boolean);
   const mix=stages.length>1?` Сейчас в семье одновременно: ${stages.join(' + ')}.`:'';
-  const close=ages.some((age,index)=>index>0&&age-ages[index]<24)?' Погодки или почти погодки: передышка между этапами иногда выглядит как смена караула, только караул тоже ты.':'';
+  const close=ages.some((age,index)=>index>0&&age-ages[index-1]<24)?' Погодки или почти погодки: передышка между этапами иногда выглядит как смена караула, только караул тоже ты.':'';
   return `У тебя ${ages.length} ${plural(ages.length,'ребёнок','ребёнка','детей')}: ${ageList.join(', ')}; между соседями по семейному расписанию — ${gaps.join(', ')}.${mix}${overlap}${close} ${typeJabs[typeId]||typeJabs.staff}`;
 }
 
