@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { archetypes, questions, zodiacSigns, zodiacReadings, astroCombinations, getAstroCombination, getQuestions, getFamilyDynamicsReading, getPersonalizedReadout, zodiacSign, scoreAnswers } from '../engine.js';
+import { archetypes, questions, zodiacSigns, zodiacReadings, astroCombinations, getAstroCombination, getQuestions, childStageForMonths, getFamilyDynamicsReading, getPersonalizedReadout, zodiacSign, scoreAnswers } from '../engine.js';
 
 test('quiz has sixteen distinct prompts and four scored options each', () => {
   assert.equal(questions.length, 16);
@@ -31,6 +31,16 @@ test('each child age route keeps eight age-matched situations inside the 16-ques
   assert.match(getQuestions(['adult'])[8].text, /взросл|семейн/i);
   assert.equal(getQuestions(['baby', 'teen']).filter(q => q.stageId === 'baby').length, 4);
   assert.equal(getQuestions(['baby', 'teen']).filter(q => q.stageId === 'teen').length, 4);
+});
+
+test('a 6-month-old and a 2-year-old get the baby route without school or craft assumptions', () => {
+  const stages = [...new Set([6, 24].map(childStageForMonths))];
+  assert.deepEqual(stages, ['baby']);
+  const routeQuestions = getQuestions(stages);
+  assert.equal(routeQuestions.length, 16);
+  const fullCopy = routeQuestions.map(question => `${question.text} ${question.options.map(option => option.label).join(' ')}`).join(' ');
+  assert.doesNotMatch(fullCopy, /поделк|макет|школьн|родительск(?:ий|ом) чат|домашн(?:ее|его) задан|воспитател|учител|дневник|младенц/i);
+  assert.match(routeQuestions[8].text, /малыш|сон|прогулк|режим/i);
 });
 
 test('all eight archetypes are reachable and have a stable tie rule', () => {
