@@ -27,7 +27,7 @@ test('each child age route keeps eight age-matched situations inside the 16-ques
     }
   }
   assert.match(getQuestions(['infant'])[8].text, /младенец|сон/i);
-  assert.match(getQuestions(['toddler'])[8].text, /двухлет|ботин/i);
+  assert.match(getQuestions(['toddler'])[8].text, /малыш|ботин/i);
   assert.match(getQuestions(['teen'])[8].text, /подрост|планы|телефон/i);
   assert.match(getQuestions(['adult'])[8].text, /взросл|семейн/i);
   assert.equal(getQuestions(['infant', 'teen']).filter(q => q.stageId === 'infant').length, 4);
