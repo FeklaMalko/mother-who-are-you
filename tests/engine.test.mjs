@@ -95,16 +95,19 @@ test('family context names exact ages, close spacing, and the archetype voice', 
   assert.doesNotMatch(getFamilyDynamicsReading([6, 84], 'staff'), /Погодки или почти погодки/);
 });
 
-test('each archetype has a 150–200 word distinct monologue and complete editorial fields', () => {
+test('each archetype has one approved 100–170 word monologue and complete editorial fields', () => {
   for (const type of archetypes) {
-    assert.ok(type.title && type.short && type.quote && type.motto && type.illustration && type.deepDive);
+    assert.ok(type.title && type.short && type.quote && type.motto && type.illustration && type.monologue);
+    assert.equal('deepDive' in type, false, type.id);
+    assert.equal('roast' in type, false, type.id);
+    assert.equal('roastMore' in type, false, type.id);
     assert.equal(type.situations.length, 5, type.id);
     assert.equal(type.strengths.length, 3, type.id);
     assert.equal(type.habits.length, 3, type.id);
     assert.equal(type.tips.length, 3, type.id);
-    const words = type.deepDive.trim().split(/\s+/).length;
-    assert.ok(words >= 150 && words <= 200, `${type.id}: ${words} words`);
-    assert.ok(type.quote && type.motto && type.deepDive.length > 500);
+    const words = type.monologue.trim().split(/\s+/).length;
+    assert.ok(words >= 100 && words <= 170, `${type.id}: ${words} words`);
+    assert.ok(type.quote && type.motto && type.monologue.length > 500);
   }
 });
 
