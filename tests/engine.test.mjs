@@ -46,10 +46,10 @@ test('a 6-month-old and a 2-year-old get the baby route without school or craft 
 test('shared questions use recognizable family scenes and avoid abstract filler', () => {
   const commonQuestions = getQuestions(['baby']).slice(0, 8);
   assert.match(commonQuestions[0].text, /перед выходом|у двери/i);
-  assert.match(commonQuestions[1].text, /«А что именно делать\?»/);
-  assert.match(commonQuestions[2].text, /с чаем/i);
+  assert.match(commonQuestions[1].text, /взрослого взять одно дело|что конкретно/i);
+  assert.match(commonQuestions[2].text, /горячим кофе/i);
   assert.match(commonQuestions[3].text, /«Я не вмешиваюсь, но/);
-  assert.match(commonQuestions[4].text, /23 кадра/i);
+  assert.match(commonQuestions[4].text, /23-м кадре/i);
   assert.match(commonQuestions[5].text, /молоко/i);
   assert.match(commonQuestions[6].text, /убрала стол/i);
   assert.match(commonQuestions[7].text, /семейном чате/i);
@@ -94,15 +94,16 @@ test('family context names exact ages, close spacing, and the archetype voice', 
   assert.doesNotMatch(getFamilyDynamicsReading([6, 84], 'staff'), /Погодки или почти погодки/);
 });
 
-test('each archetype has every required editorial field and a 200–300 word roast', () => {
+test('each archetype has a 150–200 word distinct monologue and complete editorial fields', () => {
   for (const type of archetypes) {
     assert.ok(type.title && type.short && type.quote && type.motto && type.illustration && type.deepDive);
     assert.equal(type.situations.length, 5, type.id);
     assert.equal(type.strengths.length, 3, type.id);
     assert.equal(type.habits.length, 3, type.id);
     assert.equal(type.tips.length, 3, type.id);
-    const words = `${type.roast} ${type.roastMore} ${type.deepDive}`.trim().split(/\s+/).length;
-    assert.ok(words >= 200 && words <= 300, `${type.id}: ${words} words`);
+    const words = type.deepDive.trim().split(/\s+/).length;
+    assert.ok(words >= 150 && words <= 200, `${type.id}: ${words} words`);
+    assert.ok(type.quote && type.motto && type.deepDive.length > 500);
   }
 });
 
@@ -127,10 +128,12 @@ test('all 96 sign-by-archetype comments exist and are distinct', () => {
     assert.ok(zodiacReadings[sign]);
     for (const type of archetypes) {
       const copy = getAstroCombination(sign, type.id);
-      assert.ok(copy?.includes(zodiacReadings[sign]));
-      assert.ok(copy.length > zodiacReadings[sign].length + 20);
+      assert.ok(copy?.length >= 45);
+      assert.ok(!copy.includes('В материнском типе'));
+      assert.ok(!copy.includes(zodiacReadings[sign]));
     }
   }
   assert.equal(new Set(Object.values(astroCombinations)).size, 96);
+  for (const type of archetypes) assert.equal(astroCombinations[`${zodiacSigns[0]}|${type.id}`].length >= 45, true);
   assert.equal(getAstroCombination('Марс', 'staff'), null);
 });
