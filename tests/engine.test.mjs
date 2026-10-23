@@ -43,6 +43,19 @@ test('a 6-month-old and a 2-year-old get the baby route without school or craft 
   assert.match(routeQuestions[8].text, /малыш|сон|прогулк|режим/i);
 });
 
+test('shared questions use recognizable family scenes and avoid abstract filler', () => {
+  const commonQuestions = getQuestions(['baby']).slice(0, 8);
+  assert.match(commonQuestions[0].text, /перед выходом|у двери/i);
+  assert.match(commonQuestions[1].text, /«А что именно делать\?»/);
+  assert.match(commonQuestions[2].text, /с чаем/i);
+  assert.match(commonQuestions[3].text, /«Я не вмешиваюсь, но/);
+  assert.match(commonQuestions[4].text, /23 кадра/i);
+  assert.match(commonQuestions[5].text, /молоко/i);
+  assert.match(commonQuestions[6].text, /убрала стол/i);
+  assert.match(commonQuestions[7].text, /семейном чате/i);
+  for (const question of commonQuestions) assert.equal(question.options.length, 4, question.text);
+});
+
 test('all eight archetypes are reachable and have a stable tie rule', () => {
   assert.equal(archetypes.length, 8);
   const targetIds = new Set();
