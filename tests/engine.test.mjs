@@ -16,7 +16,7 @@ test('quiz has sixteen distinct prompts and four scored options each', () => {
 });
 
 test('each child age route keeps eight age-matched situations inside the 16-question flow', () => {
-  const routes = ['baby', 'preschool', 'school', 'teen', 'adult'];
+  const routes = ['infant', 'toddler', 'preschool', 'school', 'teen', 'adult'];
   for (const stage of routes) {
     const routeQuestions = getQuestions([stage]);
     assert.equal(routeQuestions.length, 16, stage);
@@ -26,36 +26,39 @@ test('each child age route keeps eight age-matched situations inside the 16-ques
       assert.ok(question.options.every(option => option.label.length > 12));
     }
   }
-  assert.match(getQuestions(['baby'])[8].text, /малыш|сон|прогулк|режим/i);
+  assert.match(getQuestions(['infant'])[8].text, /младенец|сон/i);
+  assert.match(getQuestions(['toddler'])[8].text, /двухлет|ботин/i);
   assert.match(getQuestions(['teen'])[8].text, /подрост|планы|телефон/i);
   assert.match(getQuestions(['adult'])[8].text, /взросл|семейн/i);
-  assert.equal(getQuestions(['baby', 'teen']).filter(q => q.stageId === 'baby').length, 4);
-  assert.equal(getQuestions(['baby', 'teen']).filter(q => q.stageId === 'teen').length, 4);
+  assert.equal(getQuestions(['infant', 'teen']).filter(q => q.stageId === 'infant').length, 4);
+  assert.equal(getQuestions(['infant', 'teen']).filter(q => q.stageId === 'teen').length, 4);
 });
 
-test('a 10-month-old and a 2-year-old get baby-appropriate questions without assigning forgotten items to them', () => {
+test('a 10-month-old and a 2-year-old receive separate infant and toddler scenes', () => {
   const stages = [...new Set([10, 24].map(childStageForMonths))];
-  assert.deepEqual(stages, ['baby']);
+  assert.deepEqual(stages, ['infant', 'toddler']);
   const routeQuestions = getQuestions(stages);
   assert.equal(routeQuestions.length, 16);
-  assert.match(routeQuestions[0].text, /прогулку с малышом до двух лет/i);
-  assert.match(routeQuestions[0].text, /бодик уже не чистый/i);
-  assert.doesNotMatch(routeQuestions[0].text, /мам, а где|кто забыл|где оставил/i);
-  assert.match(routeQuestions[0].options[0].label, /запасной бодик/);
-  assert.match(routeQuestions[0].options[3].label, /меняю бодик и выхожу/i);
+  assert.match(routeQuestions[0].text, /перед семейным выходом/i);
+  assert.doesNotMatch(routeQuestions[0].text, /мам, а где|ребёнок забыл/i);
+  assert.equal(routeQuestions.filter(q => q.stageId === 'infant').length, 4);
+  assert.equal(routeQuestions.filter(q => q.stageId === 'toddler').length, 4);
+  assert.match(routeQuestions.find(q => q.stageId === 'infant').text, /младенец/i);
+  assert.match(routeQuestions.find(q => q.stageId === 'toddler').text, /малыш|ботин/i);
+  assert.doesNotMatch(routeQuestions.filter(q => q.stageId === 'toddler').map(q => q.text).join(' '), /двухлет/i);
   for (const type of archetypes) {
     const answers = routeQuestions.map(question => Math.max(0, question.options.findIndex(option => type.id in option.scores)));
     assert.equal(scoreAnswers(answers, routeQuestions).archetype.id, type.id);
   }
-  assert.match(getQuestions(['school'])[0].text, /у двери.*мам, а где/i);
-  const fullCopy = routeQuestions.map(question => `${question.text} ${question.options.map(option => option.label).join(' ')}`).join(' ');
-  assert.doesNotMatch(fullCopy, /поделк|макет|школьн|родительск(?:ий|ом) чат|домашн(?:ее|его) задан|воспитател|учител|дневник|младенц/i);
-  assert.match(routeQuestions[8].text, /малыш|сон|прогулк|режим/i);
+  assert.match(getQuestions(['school'])[0].text, /Перед семейным выходом/i);
+  const fullCopy = routeQuestions.slice(8).map(question => `${question.text} ${question.options.map(option => option.label).join(' ')}`).join(' ');
+  assert.doesNotMatch(fullCopy, /поделк|макет|школьн|родительск(?:ий|ом) чат|домашн(?:ее|его) задан|воспитател|учител|дневник/i);
+  assert.ok(routeQuestions.slice(8).every(q => !/поделк|макет|школьн|родительск(?:ий|ом) чат|домашн(?:ее|его) задан|воспитател|учител|дневник/i.test(q.text)));
 });
 
 test('shared questions use recognizable family scenes and avoid abstract filler', () => {
-  const commonQuestions = getQuestions(['baby']).slice(0, 8);
-  assert.match(commonQuestions[0].text, /прогулку с малышом до двух лет/i);
+  const commonQuestions = getQuestions(['infant']).slice(0, 8);
+  assert.match(commonQuestions[0].text, /Перед семейным выходом/i);
   assert.match(commonQuestions[1].text, /взрослого взять одно дело|что конкретно/i);
   assert.match(commonQuestions[2].text, /горячим кофе/i);
   assert.match(commonQuestions[3].text, /«Я не вмешиваюсь, но/);
@@ -79,7 +82,37 @@ test('all eight archetypes are reachable and have a stable tie rule', () => {
     targetIds.add(result.archetype.id);
   }
   assert.equal(targetIds.size, 8);
-  assert.equal(scoreAnswers([]).archetype.id, archetypes[0].id);
+  const emptyTie=scoreAnswers([]);
+  assert.ok(archetypes.some(type=>type.id===emptyTie.archetype.id));
+  assert.equal(emptyTie.tieBreak.tied.length, 8);
+  const mixedAnswers=questions.map((_,index)=>index%4);
+  const reordered=scoreAnswers([...mixedAnswers].reverse(),[...questions].reverse());
+  assert.equal(scoreAnswers(mixedAnswers,questions).archetype.id,reordered.archetype.id);
+  const repeated=scoreAnswers([],questions);
+  assert.equal(emptyTie.archetype.id,repeated.archetype.id);
+});
+
+
+test('mixed-age families retain representation and give more slots to repeated age bands', () => {
+  const manyYoung = getQuestions(['infant','infant','infant','infant','infant','infant','teen']);
+  assert.equal(manyYoung.length,16);
+  assert.ok(manyYoung.some(q=>q.stageId==='teen'));
+  assert.ok(manyYoung.filter(q=>q.stageId==='infant').length > manyYoung.filter(q=>q.stageId==='teen').length);
+  const threeBands = getQuestions(['toddler','preschool','teen']);
+  for (const stage of ['toddler','preschool','teen']) assert.ok(threeBands.some(q=>q.stageId===stage));
+  assert.deepEqual([0,1,2].map(i=>threeBands.filter(q=>q.stageId===['toddler','preschool','teen'][i]).length).sort(),[2,3,3]);
+});
+
+test('one changed answer changes only the two affected primary scores; astrology is outside scoring', () => {
+  const answers=questions.map(q=>{const hit=q.options.findIndex(option=>'staff' in option.scores);return hit<0?0:hit;});
+  const before=scoreAnswers(answers,questions);
+  const changed=[...answers];
+  const at=questions.findIndex(q=>q.options[answers[questions.indexOf(q)]]&&'staff' in q.options[answers[questions.indexOf(q)]].scores);
+  const other=questions[at].options.findIndex(option=>!('staff' in option.scores));
+  changed[at]=other;
+  const after=scoreAnswers(changed,questions);
+  assert.equal(before.scores.staff-after.scores.staff,1);
+  assert.equal(Object.values(after.scores).reduce((a,b)=>a+b,0),16);
 });
 
 test('result readout reflects the selected answer text and names the runner-up type', () => {
