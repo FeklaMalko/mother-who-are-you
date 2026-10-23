@@ -33,11 +33,21 @@ test('each child age route keeps eight age-matched situations inside the 16-ques
   assert.equal(getQuestions(['baby', 'teen']).filter(q => q.stageId === 'teen').length, 4);
 });
 
-test('a 6-month-old and a 2-year-old get the baby route without school or craft assumptions', () => {
-  const stages = [...new Set([6, 24].map(childStageForMonths))];
+test('a 10-month-old and a 2-year-old get baby-appropriate questions without assigning forgotten items to them', () => {
+  const stages = [...new Set([10, 24].map(childStageForMonths))];
   assert.deepEqual(stages, ['baby']);
   const routeQuestions = getQuestions(stages);
   assert.equal(routeQuestions.length, 16);
+  assert.match(routeQuestions[0].text, /прогулку с малышом до двух лет/i);
+  assert.match(routeQuestions[0].text, /бодик уже не чистый/i);
+  assert.doesNotMatch(routeQuestions[0].text, /мам, а где|кто забыл|где оставил/i);
+  assert.match(routeQuestions[0].options[0].label, /запасной бодик/);
+  assert.match(routeQuestions[0].options[3].label, /меняю бодик и выхожу/i);
+  for (const type of archetypes) {
+    const answers = routeQuestions.map(question => Math.max(0, question.options.findIndex(option => type.id in option.scores)));
+    assert.equal(scoreAnswers(answers, routeQuestions).archetype.id, type.id);
+  }
+  assert.match(getQuestions(['school'])[0].text, /у двери.*мам, а где/i);
   const fullCopy = routeQuestions.map(question => `${question.text} ${question.options.map(option => option.label).join(' ')}`).join(' ');
   assert.doesNotMatch(fullCopy, /поделк|макет|школьн|родительск(?:ий|ом) чат|домашн(?:ее|его) задан|воспитател|учител|дневник|младенц/i);
   assert.match(routeQuestions[8].text, /малыш|сон|прогулк|режим/i);
@@ -45,7 +55,7 @@ test('a 6-month-old and a 2-year-old get the baby route without school or craft 
 
 test('shared questions use recognizable family scenes and avoid abstract filler', () => {
   const commonQuestions = getQuestions(['baby']).slice(0, 8);
-  assert.match(commonQuestions[0].text, /перед выходом|у двери/i);
+  assert.match(commonQuestions[0].text, /прогулку с малышом до двух лет/i);
   assert.match(commonQuestions[1].text, /взрослого взять одно дело|что конкретно/i);
   assert.match(commonQuestions[2].text, /горячим кофе/i);
   assert.match(commonQuestions[3].text, /«Я не вмешиваюсь, но/);

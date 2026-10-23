@@ -143,17 +143,19 @@ const ageBlackPunchlines={
   enlightened:[' Внутренний эксперт вышел покурить.',' Чувства приняты, смена не закрыта.',' Совет экспертов не знает, где твой отпуск.',' Практика осознанности закончилась на уведомлении.'],
   circus:[' Проект завершится уборкой, как всегда.',' Конфетти переживёт твои силы.',' Критики хвалят, пылесос не согласен.',' Занавес. Уборщица — ты.']
 };
-function makeQuestion(text,index,stageId=null){
+const babyDepartureRow = ["Вы собираетесь на прогулку с малышом до двух лет. Сумка и коляска готовы, но прямо у двери обнаруживается, что чистый бодик уже не чистый. Твой ход?", ["Сверяю комплект: запасной бодик, подгузник, салфетки. Короткая прогулка опять получила смету.", "Передаю сумку второму взрослому: «Проверь сам, всё ли взял». У него тоже есть руки, не только мнение.", "Выясняю, что случилось: бодик испачкан, запасной есть. Дело раскрыто, семейная комиссия может не собираться.", "Меняю бодик и выхожу. Прогулка не обязана ждать, пока прихожая пройдёт аудит."]];
+function makeQuestion(text,index,stageId=null,universalOptions=null){
   const types=optionTypes[index];
   return {text,stageId,options:types.map((typeId,optionIndex)=>({
-    label:index<8?universalRows[index][1][optionIndex]:stageId?`${ageResponseStyles[stageId][typeId]}${ageBlackPunchlines[typeId][(index-8)%4]}`:responseStyles[typeId][(index-8)%4],
+    label:index<8?(universalOptions||universalRows[index][1])[optionIndex]:stageId?`${ageResponseStyles[stageId][typeId]}${ageBlackPunchlines[typeId][(index-8)%4]}`:responseStyles[typeId][(index-8)%4],
     scores:{[typeId]:1}
   }))};
 }
 export function getQuestions(selectedStages=[]){
   const valid=[...new Set(selectedStages)].filter(id=>ageQuestionRows[id]);
   const stages=valid.length?valid:['general'];
-  const result=universalRows.map((row,index)=>makeQuestion(row[0],index));
+  const sharedRows=stages.length===1&&stages[0]==='baby'?universalRows.map((row,index)=>index===0?babyDepartureRow:row):universalRows;
+  const result=sharedRows.map((row,index)=>makeQuestion(row[0],index,null,row[1]));
   const used=Object.fromEntries(stages.map(id=>[id,0]));
   for(let slot=0;slot<8;slot++){
     const stageId=stages[slot%stages.length];
